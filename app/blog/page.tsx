@@ -7,87 +7,9 @@ import Link from "next/link"
 import { BlogCard } from "@/components/BlogCard"
 import { useState, useMemo } from "react"
 import { MobileOptimized } from "@/components/MobileOptimized"
+import { getAllBlogPosts } from "@/lib/blog-utils"
 
-const blogPosts = [
-  {
-    id: "1",
-    title: "Getting Started with Kubernetes: A DevOps Engineer's Guide",
-    excerpt:
-      "Learn the fundamentals of Kubernetes orchestration, from basic concepts to advanced deployment strategies. This comprehensive guide covers everything you need to know to start your Kubernetes journey.",
-    content: "Full blog content here...",
-    author: "Muhammad Gamal",
-    publishedAt: "2024-01-20",
-    readTime: "8 min read",
-    tags: ["Kubernetes", "DevOps", "Containers", "Orchestration"],
-    image: "/images/devops-start.png",
-    slug: "getting-started-with-kubernetes",
-  },
-  {
-    id: "2",
-    title: "CI/CD Pipeline Best Practices with GitHub Actions",
-    excerpt:
-      "Discover how to build robust CI/CD pipelines using GitHub Actions. From basic workflows to advanced deployment strategies, learn how to automate your development process effectively.",
-    content: "Full blog content here...",
-    author: "Muhammad Gamal",
-    publishedAt: "2024-01-15",
-    readTime: "6 min read",
-    tags: ["CI/CD", "GitHub Actions", "Automation", "DevOps"],
-    image: "/images/pipeline.png",
-    slug: "cicd-pipeline-github-actions",
-  },
-  {
-    id: "3",
-    title: "Infrastructure as Code with Terraform: Complete Tutorial",
-    excerpt:
-      "Master Infrastructure as Code using Terraform. Learn how to provision and manage cloud resources declaratively across multiple cloud providers with practical examples.",
-    content: "Full blog content here...",
-    author: "Muhammad Gamal",
-    publishedAt: "2024-01-10",
-    readTime: "12 min read",
-    tags: ["Terraform", "IaC", "AWS", "Cloud", "Infrastructure"],
-    image: "/images/terraform.jpeg",
-    slug: "infrastructure-as-code-terraform",
-  },
-  {
-    id: "4",
-    title: "Monitoring and Observability with Prometheus and Grafana",
-    excerpt:
-      "Build comprehensive monitoring solutions using Prometheus and Grafana. Learn how to collect metrics, create dashboards, and set up alerting for your applications.",
-    content: "Full blog content here...",
-    author: "Muhammad Gamal",
-    publishedAt: "2024-01-05",
-    readTime: "10 min read",
-    tags: ["Monitoring", "Prometheus", "Grafana", "Observability"],
-    image: "/images/Grafana.png",
-    slug: "monitoring-prometheus-grafana",
-  },
-  {
-    id: "5",
-    title: "Docker Best Practices for Production Environments",
-    excerpt:
-      "Learn essential Docker best practices for production deployments. From security considerations to performance optimization, ensure your containers are production-ready.",
-    content: "Full blog content here...",
-    author: "Muhammad Gamal",
-    publishedAt: "2024-01-01",
-    readTime: "7 min read",
-    tags: ["Docker", "Containers", "Production", "Security"],
-    image: "/images/docker.jpg",
-    slug: "docker-best-practices-production",
-  },
-  {
-    id: "6",
-    title: "GitOps with ArgoCD: Declarative Deployment Strategies",
-    excerpt:
-      "Implement GitOps workflows using ArgoCD for Kubernetes deployments. Learn how to achieve continuous delivery with declarative, version-controlled deployments.",
-    content: "Full blog content here...",
-    author: "Muhammad Gamal",
-    publishedAt: "2023-12-28",
-    readTime: "9 min read",
-    tags: ["GitOps", "ArgoCD", "Kubernetes", "Deployment"],
-    image: "/images/argocd.png",
-    slug: "gitops-argocd-deployment",
-  },
-]
+const blogPosts = getAllBlogPosts()
 
 const categories = ["All", "Kubernetes", "CI/CD", "Terraform", "Monitoring", "Docker", "GitOps"]
 
