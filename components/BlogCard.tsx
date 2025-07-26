@@ -3,9 +3,12 @@
 import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, Clock, User, ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Calendar, Clock, User, ArrowRight, Share2 } from "lucide-react"
 import { LazyImage } from "./LazyImage"
 import Link from "next/link"
+import { useState } from "react"
+import { SharePopup } from "./SharePopup"
 
 interface BlogPost {
   id: string
@@ -26,6 +29,8 @@ interface BlogCardProps {
 }
 
 export function BlogCard({ post, index }: BlogCardProps) {
+  const [isShareOpen, setIsShareOpen] = useState(false)
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -82,18 +87,42 @@ export function BlogCard({ post, index }: BlogCardProps) {
               <span className="text-sm text-gray-600 dark:text-gray-400">{post.author}</span>
             </div>
 
-            <Link href={`/blog/${post.slug}`}>
-              <motion.button
-                whileHover={{ x: 5 }}
-                className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  setIsShareOpen(true)
+                }}
+                className="h-8 w-8 p-0 hover:bg-gray-100 dark:hover:bg-gray-800"
               >
-                <span>Read More</span>
-                <ArrowRight className="h-4 w-4" />
-              </motion.button>
-            </Link>
+                <Share2 className="h-4 w-4" />
+              </Button>
+
+              <Link href={`/blog/${post.slug}`}>
+                <motion.button
+                  whileHover={{ x: 5 }}
+                  className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
+                >
+                  <span>Read More</span>
+                  <ArrowRight className="h-4 w-4" />
+                </motion.button>
+              </Link>
+            </div>
           </div>
         </CardContent>
       </Card>
+      
+      {/* Share Popup */}
+      <SharePopup
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        title={post.title}
+        url={typeof window !== 'undefined' ? `${window.location.origin}/blog/${post.slug}` : ''}
+        excerpt={post.excerpt}
+      />
     </motion.div>
   )
 }

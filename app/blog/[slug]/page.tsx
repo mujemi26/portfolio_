@@ -7,6 +7,8 @@ import { ArrowLeft, Calendar, Clock, User, Share2, BookOpen } from "lucide-react
 import Link from "next/link"
 import { LazyImage } from "@/components/LazyImage"
 import { MobileOptimized } from "@/components/MobileOptimized"
+import { SharePopup } from "@/components/SharePopup"
+import { useState } from "react"
 
 // This would typically come from a CMS or API
 const getBlogPost = (slug: string) => {
@@ -2852,6 +2854,7 @@ interface BlogPostPageProps {
 }
 
 export default function BlogPostPage({ params }: BlogPostPageProps) {
+  const [isShareOpen, setIsShareOpen] = useState(false)
   const post = getBlogPost(params.slug)
 
   if (!post) {
@@ -2880,7 +2883,12 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 <span className="sm:hidden">Back</span>
               </Button>
             </Link>
-            <Button variant="ghost" size="sm" className="hover:bg-blue-50 dark:hover:bg-blue-900/20">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="hover:bg-blue-50 dark:hover:bg-blue-900/20"
+              onClick={() => setIsShareOpen(true)}
+            >
               <Share2 className="h-4 w-4" />
               <span className="hidden sm:inline ml-2">Share</span>
             </Button>
@@ -3159,6 +3167,15 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         </section>
       </article>
+      
+      {/* Share Popup */}
+      <SharePopup
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        title={post.title}
+        url={typeof window !== 'undefined' ? window.location.href : ''}
+        excerpt={post.excerpt}
+      />
     </MobileOptimized>
   )
 }
